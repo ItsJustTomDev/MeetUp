@@ -35,7 +35,6 @@ class App extends Component {
           this.setState({
             events,
             locations: extractLocations(events),
-            numberOfEvents: events.length,
           });
         }
       });
@@ -56,13 +55,20 @@ class App extends Component {
     console.log(eventCount, location);
     getEvents().then((events) => {
       let locationEvents = location === "all" ? events : events.filter((event) => event.location === location);
-      console.log(locationEvents);
       this.setState({
-        events: locationEvents.slice(0, eventCount),
-        numberOfEvents: locationEvents.length,
+        events: locationEvents,
         locationSelected: location,
+        numberOfEvents: locationEvents.length,
       });
     });
+  };
+
+  updateNumba = (numba) => {
+    if (numba > this.state.numberOfEvents) {
+      this.setState({ numberOfEvents: this.state.events.length });
+    } else {
+      this.setState({ numberOfEvents: numba });
+    }
   };
 
   getData = () => {
@@ -83,7 +89,7 @@ class App extends Component {
         <h1>Meet App</h1>
         <h4>Choose your nearest city</h4>
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
-        <NumberOfEvents updateEvents={this.updateEvents} numberOfEvents={this.state.numberOfEvents} />
+        <NumberOfEvents updateNumba={this.updateNumba} numberOfEvents={this.state.numberOfEvents} />
         <h4>Events in each city</h4>
         <div className="data-vis-wrapper">
           <EventGenre events={this.state.events} locations={this.state.locations} />
@@ -97,7 +103,7 @@ class App extends Component {
             </ScatterChart>
           </ResponsiveContainer>
         </div>
-        <EventList events={this.state.events} />
+        <EventList numba={this.state.numberOfEvents} events={this.state.events} />
         <InitalPage
           showInitialPage={this.state.showInitialPage}
           getAccessToken={() => {

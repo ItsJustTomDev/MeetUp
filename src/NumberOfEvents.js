@@ -20,7 +20,7 @@ class NumberOfEvents extends Component {
         infoText: "Please enter number between 1 - 30",
       });
     }
-    this.props.updateEvents(undefined, newValue);
+    this.props.updateNumba(newValue);
   };
 
   render() {
