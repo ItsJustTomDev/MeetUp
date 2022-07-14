@@ -6,7 +6,7 @@ import NumberOfEvents from "./NumberOfEvents";
 import { getEvents, extractLocations, checkToken, getAccessToken } from "./api";
 import "./nprogress.css";
 import { OfflineAlert } from "./Alert";
-import initalPage from "./initialPage";
+import InitalPage from "./initialPage";
 import EventGenre from "./EventGenre";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
@@ -35,6 +35,7 @@ class App extends Component {
           this.setState({
             events,
             locations: extractLocations(events),
+            numberOfEvents: events.length,
           });
         }
       });
@@ -55,9 +56,10 @@ class App extends Component {
     console.log(eventCount, location);
     getEvents().then((events) => {
       let locationEvents = location === "all" ? events : events.filter((event) => event.location === location);
+      console.log(locationEvents);
       this.setState({
         events: locationEvents.slice(0, eventCount),
-        numberOfEvents: eventCount,
+        numberOfEvents: locationEvents.length,
         locationSelected: location,
       });
     });
@@ -96,7 +98,7 @@ class App extends Component {
           </ResponsiveContainer>
         </div>
         <EventList events={this.state.events} />
-        <initalPage
+        <InitalPage
           showInitialPage={this.state.showInitialPage}
           getAccessToken={() => {
             getAccessToken();

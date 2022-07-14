@@ -1,8 +1,8 @@
 import React from "react";
 import "./initialPage.css";
 
-function initalPage(props) {
-  return props.showWelcomeScreen ? (
+function InitalPage(props) {
+  return props.showInitialPage ? (
     <div className="WelcomeScreen">
       <div className="welcomeWrapper">
         <h1>Meepup APP</h1>
@@ -17,4 +17,4 @@ function initalPage(props) {
   ) : null;
 }
 
-export default initalPage;
+export default InitalPage;

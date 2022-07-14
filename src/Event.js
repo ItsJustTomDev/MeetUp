@@ -18,7 +18,11 @@ class Event extends Component {
         <p className="location">
           @{event.summary} | {event.location}
         </p>
-        <button variant="outline-info" className={`details-button ${collapsed ? "show" : "hide"}-details`} onClick={this.handleClick}>
+        <button
+          variant="outline-info"
+          className={`details-button ${collapsed ? "show" : "hide"}-details`}
+          onClick={() => this.setState({ collapsed: !this.state.collapsed })}
+        >
           {collapsed ? "Show Details" : "Hide Details"}
         </button>
         {!collapsed && (
